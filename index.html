@@ -15,7 +15,7 @@
 <section class="page" id="reports"><div class="card"><h2>Daily sales & branch report</h2><div class="row"><div><label>Report period</label><select id="rperiod"><option value="day">Daily</option><option value="week">Weekly</option><option value="month">Monthly</option><option value="year">Yearly</option></select></div><div><label>Reference date</label><input type="date" id="rdate"></div><div><label>Branch</label><select id="rbranch"></select></div><div style="align-self:end"><button id="runreport">Update</button></div></div><p class="muted">Only Admin can view this report. Voided sales are excluded from revenue totals but remain in the audit history.</p><div class="stats" id="stats"></div><div id="reporttable"></div><h3>Remaining subscription balances by sold branch</h3><div id="balances"></div></div></section>
 <section class="page" id="billpage"><div class="card no-print"><h2>Last bill</h2><button id="print">Print short bill</button> <button id="reprint" class="alt">Reprint</button> <button id="savebill" class="alt">Save text receipt</button></div><div class="billbg"><div id="printArea"><div class="bill" id="receipt">No bill created yet.</div></div></div></section>
 <p class="muted">Live cloud POS: staff sign-in, sales, subscriptions and branch records are connected to the Healthy Version database. Keep your account credentials private and use the Logout button when finished.</p></main><div id="modal"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
 <script>
 const photo=id=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w=500&q=70';
 const raw=[
