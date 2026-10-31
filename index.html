@@ -32,7 +32,8 @@ const plans={'Chicken only':{5:[123,244,364,486],10:[244,486,724,962],15:[359,71
 const addons={5:[59,59,75],10:[114,118,140],15:[156,208,195],20:[232,249,250],24:[249,307,288]};
 let db={menu:raw.map((x,i)=>({id:'m'+i,cat:x[0],name:x[1],price:x[2],photo:photo(x[3]),active:true})),cats:['Chicken','Beef','Fish & Seafood','Burgers','Pizza','Sandwiches','Salads','Sweets & Desserts','Carbs & Sides','Sauces & Extras','Coffee & Drinks'],branches:['Olaya','Aziziya','Sporty','Dammam'],subs:[],sales:[],customers:[],vat:15,discount:20,pin:'2468',theme:'light',business:'HEALTHY VERSION',thanks:'Your health journey matters to us. We look forward to serving you again!',footer:'Eat healthy. Feel better. Live better.',address:'',receiptPhone:'',alertAt:5,ratec:7,rateb:10,ratef:13,raterice:10,ratecarb:2,next:1001,last:null,managerPins:{Olaya:'1111',Aziziya:'2222',Sporty:'3333',Dammam:'4444'}};
 try{let old=JSON.parse(localStorage.getItem('hvposfix')||'null');if(old)db={...db,...old}}catch(e){}
-delete db.managerPins;delete db.pin;\nif(!db.cats.includes('Cold Drinks'))db.cats.push('Cold Drinks');
+delete db.managerPins;delete db.pin;
+if(!db.cats.includes('Cold Drinks'))db.cats.push('Cold Drinks');
 db.thanks=String(db.thanks||'').replace(/thank you for choosing healthy version[!.,\s🌿🌱🍀]*/ig,'').trim()||'Your health journey matters to us. We look forward to serving you again!';
 db.footer=String(db.footer||'').replace(/thank you for choosing healthy version[!.,\s🌿🌱🍀]*/ig,'').trim()||'Eat healthy. Feel better. Live better.';
 let chosen='All',cart=[];const $=x=>document.getElementById(x),fmt=n=>'SAR '+(+n||0).toFixed(2),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
