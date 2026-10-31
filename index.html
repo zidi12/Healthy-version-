@@ -94,6 +94,7 @@ function savePlan(p,d){plans[p][d]=plans[p][d].map((v,i)=>Math.max(0,+$('p'+p.re
 // Supabase authentication bootstrap. Publishable key is intended for browser use.
 const HV_SUPABASE_URL='https://kygycpviqrfiivcmyrtm.supabase.co';
 const HV_SUPABASE_KEY='sb_publishable_AMSBXpqvWSrm99o3TsAJYg_m5L_ISCT';
+const HV_RECOVERY_LANDING=/(?:^|[&#])type=recovery(?:&|$)/.test(location.hash.slice(1))||new URLSearchParams(location.search).get('type')==='recovery';
 const hvSupabase=window.supabase.createClient(HV_SUPABASE_URL,HV_SUPABASE_KEY);
 const HV_BRANCH_IDS={
  'Aziziyah':'7c85aa5b-25b7-4fa0-9483-2ae200203e93',
@@ -103,7 +104,7 @@ const HV_BRANCH_IDS={
  'Sporty':'c729bb20-ec4c-4397-b85a-26b6d261f1bd'
 };
 let hvProfile=null;
-let hvRecoveryMode=false,hvRecoveryEmail='';
+let hvRecoveryMode=HV_RECOVERY_LANDING,hvRecoveryEmail='';
 const HV_BRANCH_EMAILS={Olaya:'healthybersion9@gmail.com',Aziziya:'branchaziziyah1@gmail.com',Dammam:'branchdamam4@gmail.com',Sporty:'sportybranch@gmail.com',Admin:'bhuttausama012@gmail.com'};
 const HV_BRANCH_LABELS={Olaya:'Olaya',Aziziya:'Aziziyah',Dammam:'Dammam',Sporty:'Sporty'};
 function hvShowRecovery(){hvRecoveryMode=true;$('hv-login').style.display='flex';document.body.classList.add('hv-locked');$('hv-recovery').style.display='block';$('hv-login-btn').style.display='none';$('hv-forgot-btn').style.display='none';$('hv-password-box').style.display='none';$('hv-passcode-box').style.display='none';$('hv-new-password-box').style.display='none';$('hv-verify-otp').style.display='block';$('hv-recovery-otp').style.display='block';hvSetStatus('Enter the 6-digit OTP sent to the registered email.');}
