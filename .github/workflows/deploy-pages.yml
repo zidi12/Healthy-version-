@@ -18,6 +18,37 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Validate POS HTML and inline JavaScript
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          class Scripts(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.parts = []
+                  self.current = None
+              def handle_starttag(self, tag, attrs):
+                  if tag == "script" and not dict(attrs).get("src"):
+                      self.current = []
+              def handle_data(self, data):
+                  if self.current is not None:
+                      self.current.append(data)
+              def handle_endtag(self, tag):
+                  if tag == "script" and self.current is not None:
+                      self.parts.append("".join(self.current))
+                      self.current = None
+          html = Path("index.html").read_text(encoding="utf-8")
+          parser = Scripts()
+          parser.feed(html)
+          assert parser.parts, "No inline JavaScript found"
+          assert "${esc(s.subcode)}" in html, "Subscription receipt code field missing"
+          assert "'<div>Subscription: ${esc(s.subcode)}</div>'" not in html, "Receipt interpolation bug returned"
+          for i, part in enumerate(parser.parts):
+              Path(f"/tmp/hv-inline-{i}.js").write_text(part, encoding="utf-8")
+          print(f"Validated HTML and found {len(parser.parts)} inline script block(s).")
+          PY
+          for file in /tmp/hv-inline-*.js; do node --check "$file"; done
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .
